@@ -47,32 +47,32 @@ def run():
                             -- Adivina la siguiente palabra --
 
             """)
-            print(f"Vidas: {v_symbol}")
+            print(f"Vidas: {v_symbol}") # Imprime las vidas con simbolo de corazon
 
-            while game_word != r_word:
+            while game_word != r_word: # Ciclo que se repite hasta que la condición sea diferente. En este caso, el while se repite siempre y cuando la palabra la cual se esta jugando "r_word" sea diferente a la que se debe adivinar "game_word".
                 print(r_word.upper())
-                l = normalize(input("-- Intenta una letra: "))
-                if len(l) != 1 or int(l.isnumeric()):
-                    raise ValueError
-                elif l in game_word:
-                    r_word = list(r_word)
-                    for i, x in enumerate(game_word):
-                        if x == l:
-                            r_word[i] = x
-                    r_word = "".join(r_word)
-                else:
+                l = normalize(input("-- Intenta una letra: ")) # Input que permite al usuario ingresar la letra para jugar
+                if len(l) != 1 or int(l.isnumeric()): # Esta if sentence limita la cantidad de letras a ingresar a solamente una, asi como tambien valida que el caracter ingresado sea una letra y no un numero.
+                    raise ValueError # En caso de que se cumpla la condición se levanta una excepción de ValueError, esto para poder manejarlo mas adelante.
+                elif l in game_word: # Valida si la letra ingresada esta dentro de la palabra que se esta jugando, si esta, entra la logica del codigo.
+                    r_word = list(r_word) # Se convierte la palabra de juego en una lista
+                    for i, x in enumerate(game_word): # Enumera los puestos de cada caracter en la palabra comenzando desde el 0. Al ser un diccionario se pasan dos parametros i, x los cuales serian respectivamente key y value del diccionario
+                        if x == l: # Se compara si la letra ingresada "l" es igual a "x" dentro de la palabra.
+                            r_word[i] = x # Se asigna la letra "x" en la posicion "i" a la que pertence.
+                    r_word = "".join(r_word) # Se usa la función "".join() para unir los caracteres nuevamente en una palabra completa
+                else: # Este else valida que la letra que se ingreso no esta en la palabra y tambien maneja el reducir de las vidas de juego que se tiene implementado
                     print("La letra que ingresaste no es de la palabra")
                     vidas -= 1
                     v_symbol = vidas * "♥"
                     print(f"Vidas restantes: {v_symbol}")
-                    if vidas == 0:
+                    if vidas == 0: # if sentence que valida y se activa unicamente si las vidas llegan a 0.
                         print(f"Te has quedado sin vidas. La palabra era {game_word}")
                         break
                 time.sleep(1)
                 os.system("cls")
-            print(f"¡Felicitaciones! Tu palabra era: {r_word}")
+            print(f"¡Felicitaciones! Tu palabra era: {r_word.upper}") # Se imprime la palabra en consola cuando se logran adivinar todas las letras que la componen dentro de los 7 intentos predeterminados
 
-            play_again = int(input("""¿Quieres jugar de nuevo?
+            play_again = int(input("""¿Quieres jugar de nuevo? 
             SI: Oprime 1
             No: Oprime 2
             """))
@@ -82,8 +82,7 @@ def run():
             else:
                 print("¡Gracias por jugar!")
                 break
-        except ValueError:
-            print("Solamente debes ingresar una letra. Tampoco se aceptan números")
+        except ValueError: # Se le da manejo a la excepción del ValueError que se invoco mas arriba en la misma función; esto para evitar errores al momento de la ejecución del proprama            print("Solamente debes ingresar una letra. Tampoco se aceptan números")
             break
 
 
